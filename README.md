@@ -7,3 +7,11 @@ If you find something interesting for you, feel free to use at your own risk. I 
 Existence is pain for Tasks! You are obliged to keep them simple and fast to accomplished! Or otherwise they'll get back at you!
 
 DON'T USE THE BOX ON PRODUCTION CODE! You are warned!
+
+# Nuget
+
+Nuget is the easiest way to install it (see [nuget page](https://www.nuget.org/packages/MrMeeseeks/69.0.0)):
+
+```
+> Install-Package MrMeeseeks
+```
