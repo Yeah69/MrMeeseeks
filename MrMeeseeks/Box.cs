@@ -78,20 +78,17 @@ namespace MrMeeseeks
 
         private class MrMeeseeks
         {
-            private static int NextID;
+            private static int _nextId;
 
             internal MrMeeseeks(Task taskToFulfill)
             {
-                ID = NextID++;
-                Spawned = DateTime.Now;
+                Id = _nextId++;
 
                 TaskToFulfill = taskToFulfill;
                 Fulfillment = FulfillmentProcess();
             }
             
-            private DateTime Spawned { get; }
-            
-            private int ID { get; }
+            private int Id { get; }
             
             private Task TaskToFulfill { get; }
             
@@ -195,7 +192,7 @@ namespace MrMeeseeks
             {
                 var message = messageOptions[Random.Next() % messageOptions.Count];
             
-                Console.WriteLine($"{DateTime.Now.ToString()} [Meeseeks {ID}] {message}");
+                Console.WriteLine($"{DateTime.Now} [Meeseeks {Id}] {message}");
             }
         }
     }

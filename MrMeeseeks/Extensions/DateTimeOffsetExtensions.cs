@@ -28,49 +28,28 @@ namespace MrMeeseeks.Extensions
                 TimeSpan.Zero);
         }
 
-        public static DateTimeOffset OffsetMonthBy(this DateTimeOffset @this, int offset)
-        {
-            if (offset == 0)
-                return new DateTimeOffset(
-                    @this.Year,
-                    @this.Month,
-                    1,
-                    0,
-                    0,
-                    0,
-                    TimeSpan.Zero);
-            if (offset > 0)
-            {
-                var current = new DateTimeOffset(
-                    @this.Year + offset / 12, 
-                    @this.Month, 
-                    1,
-                    0,
-                    0,
-                    0,
-                    TimeSpan.Zero);
-                var limit = offset % 12;
-                for (int i = 1; i <= limit; i++)
-                    current = current.NextMonth();
-                return current;
-            }
-            else
-            {
-                offset *= -1;
+        public static DateTimeOffset OffsetMonthBy(this DateTimeOffset @this, int offset) => 
+            FromMonthIndex(@this.ToMonthIndex() + offset);
 
-                var current = new DateTimeOffset(
-                    @this.Year - offset / 12, 
-                    @this.Month, 
-                    1,
-                    0,
-                    0,
-                    0,
-                    TimeSpan.Zero);
-                var limit = offset % 12;
-                for (int i = 1; i <= limit; i++)
-                    current = current.PreviousMonth();
-                return current;
-            }
-        }
+        public static DateTimeOffset FromMonthIndex(int index) => 
+            new DateTimeOffset(
+                index / 12 + 1, 
+                index % 12 + 1, 
+                1,
+                0,
+                0,
+                0,
+                TimeSpan.Zero);
+
+        public static int ToMonthIndex(this DateTimeOffset month) => 
+            (month.Year - 1) * 12 + month.Month - 1;
+
+        public static int CountOfMonths => 
+            // Count months of the years between the min and max date exclusively
+            (DateTimeOffset.MaxValue.Year - DateTimeOffset.MinValue.Year + 1 - 2) * 12
+            // Count the months of year of the min date
+            + 12 - DateTimeOffset.MinValue.Month + 1 +
+            // Count the months of year of the max date
+            DateTime.MaxValue.Month;
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks", "MrMeeseeks\MrMeeseeks.csproj", "{06024C6A-CF9A-4A5C-AD31-D13DA87062C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks.Test", "MrMeeseeks.Test\MrMeeseeks.Test.csproj", "{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{06024C6A-CF9A-4A5C-AD31-D13DA87062C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06024C6A-CF9A-4A5C-AD31-D13DA87062C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06024C6A-CF9A-4A5C-AD31-D13DA87062C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

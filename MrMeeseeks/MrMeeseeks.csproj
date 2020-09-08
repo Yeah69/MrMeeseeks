@@ -5,13 +5,14 @@
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageVersion>69.0.0</PackageVersion>
+    <PackageVersion>69.0.1</PackageVersion>
     <Title>MrMeeseeks</Title>
     <Authors>Yeah69</Authors>
-    <PackageIconUrl>../Icon/Yeah69_256.png</PackageIconUrl>
+    <PackageIcon>Yeah69Logo_256.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Utility Helper MrMeeseeks</PackageTags>
-    <PackageLicenseUrl>LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression />
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReleaseNotes>Initial</PackageReleaseNotes>
     <Description># MrMeeseeks
 This is a project where I'll dump all utility algorithms and data structures in order to not bloat application-specific code with application-unspecific code and in order to prevent writing same code over and over again.
@@ -24,5 +25,17 @@ DON'T USE THE BOX ON PRODUCTION CODE! You are warned!</Description>
     <PackageProjectUrl>https://github.com/Yeah69/MrMeeseeks</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Yeah69/MrMeeseeks</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Icon\Yeah69Logo.ico" Pack="true" PackagePath="" />
+    <None Include="..\Icon\Yeah69Logo_256.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
 </Project>
