@@ -17,7 +17,11 @@ namespace MrMeeseeks.Reactive.Extensions
                 .FromEventPattern<PropertyChangedEventArgs>(
                     notifyPropertyChanged,
                     nameof(notifyPropertyChanged.PropertyChanged))
-                .Where(e => propertyNamesHashSet.Contains(e.EventArgs.PropertyName))
+                .Where(e =>
+                    // if null or empty than all properties potentially could have changed
+                    // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged?view=netcore-3.1#remarks
+                    e.EventArgs.PropertyName.IsNullOrEmpty()
+                    || propertyNamesHashSet.Contains(e.EventArgs.PropertyName))
                 .Select(e => e.EventArgs.PropertyName);
         }
     }
