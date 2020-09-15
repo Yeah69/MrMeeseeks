@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Title>MrMeeseeks.Reactive</Title>
+        <Description># MrMeeseeks Reactive
+            This is a project where I'll dump all utility algorithms and data structures for Rx in order to not bloat application-specific code with application-unspecific code and in order to prevent writing same code over and over again.
+            If you find something interesting for you, feel free to use at your own risk. I don't think that I'll write exhaustive unit test for this project. But feel free to write issues.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="morelinq" Version="3.3.2" />
+      <PackageReference Include="System.Reactive" Version="4.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MrMeeseeks\MrMeeseeks.csproj" />
+    </ItemGroup>
+
+</Project>

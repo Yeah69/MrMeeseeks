@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks", "MrMeeseeks\Mr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks.Test", "MrMeeseeks.Test\MrMeeseeks.Test.csproj", "{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks.Reactive", "MrMeeseeks.Reactive\MrMeeseeks.Reactive.csproj", "{B24E41A1-91E5-4CD8-92B2-5F52FF948F4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{4DC733E7-47E7-439E-A415-620EB886DBB9}"
+ProjectSection(SolutionItems) = preProject
+	Directory.Build.props = Directory.Build.props
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +28,10 @@ Global
 		{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4FE2B83-F32F-4FE0-87CA-EBCF1D099110}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B24E41A1-91E5-4CD8-92B2-5F52FF948F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B24E41A1-91E5-4CD8-92B2-5F52FF948F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B24E41A1-91E5-4CD8-92B2-5F52FF948F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B24E41A1-91E5-4CD8-92B2-5F52FF948F4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
