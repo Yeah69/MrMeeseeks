@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
         <Title>MrMeeseeks.Windows</Title>
         <Description># MrMeeseeks Windows
             This is a project where I'll dump all utility algorithms and data structures for WPF in order to not bloat application-specific code with application-unspecific code and in order to prevent writing same code over and over again.
             If you find something interesting for you, feel free to use at your own risk. I don't think that I'll write exhaustive unit test for this project. But feel free to write issues.</Description>
+        <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
