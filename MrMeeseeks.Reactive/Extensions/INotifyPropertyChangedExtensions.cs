@@ -12,9 +12,10 @@ namespace MrMeeseeks.Reactive.Extensions
             this INotifyPropertyChanged notifyPropertyChanged,
             string propertyName) =>
             Observable
-                .FromEventPattern<PropertyChangedEventArgs>(
-                    notifyPropertyChanged,
-                    nameof(notifyPropertyChanged.PropertyChanged))
+                .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                    handler => handler.Invoke,
+                    h => notifyPropertyChanged.PropertyChanged += h,
+                    h => notifyPropertyChanged.PropertyChanged -= h)
                 .Where(e =>
                     // if null or empty than all properties potentially could have changed
                     // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged?view=netcore-3.1#remarks
@@ -28,9 +29,10 @@ namespace MrMeeseeks.Reactive.Extensions
         {
             var propertyNamesHashSet = propertyNames.WhereNotNull().ToHashSet();
             return Observable
-                .FromEventPattern<PropertyChangedEventArgs>(
-                    notifyPropertyChanged,
-                    nameof(notifyPropertyChanged.PropertyChanged))
+                .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                    handler => handler.Invoke,
+                    h => notifyPropertyChanged.PropertyChanged += h,
+                    h => notifyPropertyChanged.PropertyChanged -= h)
                 .Where(e =>
                     // if null or empty than all properties potentially could have changed
                     // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged?view=netcore-3.1#remarks

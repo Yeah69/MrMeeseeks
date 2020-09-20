@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MrMeeseeks.Reactive\MrMeeseeks.Reactive.csproj" />
       <ProjectReference Include="..\MrMeeseeks\MrMeeseeks.csproj" />
     </ItemGroup>
 
