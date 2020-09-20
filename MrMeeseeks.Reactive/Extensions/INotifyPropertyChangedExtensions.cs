@@ -20,7 +20,7 @@ namespace MrMeeseeks.Reactive.Extensions
                     // if null or empty than all properties potentially could have changed
                     // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged?view=netcore-3.1#remarks
                     e.EventArgs.PropertyName.IsNullOrEmpty()
-                    || propertyName == e.EventArgs.PropertyName)
+                    || propertyName.Equals(e.EventArgs.PropertyName))
                 .Select(e => e.EventArgs.PropertyName);
 
         public static IObservable<string> ObservePropertyChanged(

@@ -15,6 +15,7 @@ namespace MrMeeseeks.Test.Extensions
             // Arrange + Act + Assert
             using var _ = new TestClass().ObservePropertyChanged("").Subscribe(__ => {});
         }
+        
         [Fact]
         public void ObservePropertyChanged_ObservableCollection_Works()
         {
@@ -22,11 +23,37 @@ namespace MrMeeseeks.Test.Extensions
             using var _ = new ObservableCollection<string>().ObservePropertyChanged("").Subscribe(__ => {});
         }
         
+        [Fact]
+        public void ObservePropertyChanged_ChangingTestProp_NotificationEmitted()
+        {
+            // Arrange
+            bool wasTriggered = false;
+            var sut = new TestClass();
+            using var _ = sut.ObservePropertyChanged(nameof(TestClass.TestProp)).Subscribe(__ => wasTriggered = true);
+            
+            // Act
+            sut.TestProp = 69;
+            
+            // Assert
+            Assert.True(wasTriggered);
+        }
+        
         private class TestClass : INotifyPropertyChanged
         {
+            private int _testProp;
             public event PropertyChangedEventHandler? PropertyChanged;
 
-            protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+            public int TestProp
+            {
+                get => _testProp;
+                set
+                {
+                    _testProp = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
