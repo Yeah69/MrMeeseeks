@@ -24,11 +24,11 @@ jobs:
         dotnet-version: 3.1.101
     - run: set DOTNET_CLI_TELEMETRY_OPTOUT=1
     - name: Install dependencies
-      run: dotnet restore .\BFF.DataVirtualizingCollection.sln
+      run: dotnet restore .\MrMeeseeks.sln
     - name: Build
-      run: dotnet build .\BFF.DataVirtualizingCollection.sln --configuration Release --no-restore
+      run: dotnet build .\MrMeeseeks.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test .\BFF.DataVirtualizingCollection.UnitTests\BFF.DataVirtualizingCollection.UnitTests.csproj --no-restore --verbosity normal
+      run: dotnet test .\MrMeeseeks.Test\MrMeeseeks.Test.csproj --no-restore --verbosity normal
     - name: Publish to NuGet
       uses: brandedoutcast/publish-nuget@v2
       with:
