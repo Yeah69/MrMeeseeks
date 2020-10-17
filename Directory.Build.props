@@ -1,8 +1,8 @@
 <Project>
     <PropertyGroup>
+        <MinVerTagPrefix>v</MinVerTagPrefix>
+        <Version>$(MinVerVersion)</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <PackageVersion>69.0.10</PackageVersion>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
@@ -11,9 +11,6 @@
         <PackageIcon>Yeah69Logo_256.png</PackageIcon>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Utility Helper MrMeeseeks</PackageTags>
-        <Version>69.0.10</Version>
-        <AssemblyVersion>69.0.10.0</AssemblyVersion>
-        <FileVersion>69.0.10.0</FileVersion>
         <PackageProjectUrl>https://github.com/Yeah69/MrMeeseeks</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Yeah69/MrMeeseeks</RepositoryUrl>
         <PackageLicenseExpression />

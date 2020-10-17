@@ -12,4 +12,11 @@ Existence is pain for Tasks! You are obliged to keep them simple and fast to acc
 DON'T USE THE BOX ON PRODUCTION CODE! You are warned!</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="2.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
