@@ -22,11 +22,19 @@ namespace MrMeeseeks.Extensions
         public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> enumerable) =>
             new ReadOnlyCollection<T>(enumerable.ToList());
 
-        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) =>
-            enumerable.Where(t => !(t is null));
+        public static IEnumerable<T> WhereNotNullRef<T>(this IEnumerable<T?> enumerable) where T : class =>
+            // ReSharper disable once RedundantEnumerableCastCall
+            enumerable.Where(t => !(t is null)).OfType<T>();
 
-        public static IEnumerable<T> TakeWhileNotNull<T>(this IEnumerable<T> enumerable) =>
-            enumerable.TakeWhile(t => !(t is null));
+        public static IEnumerable<T> TakeWhileNotNullRef<T>(this IEnumerable<T?> enumerable) where T : class =>
+            // ReSharper disable once RedundantEnumerableCastCall
+            enumerable.TakeWhile(t => !(t is null)).OfType<T>();
+
+        public static IEnumerable<T> WhereNotNullable<T>(this IEnumerable<T?> enumerable) where T : struct =>
+            enumerable.Where(t => !(t is null)).Select(t => t!.Value);
+
+        public static IEnumerable<T> TakeWhileNotNullable<T>(this IEnumerable<T?> enumerable) where T : struct =>
+            enumerable.TakeWhile(t => !(t is null)).Select(t => t!.Value);
 
 
         public static IEnumerable<T> IterateTreeBreadthFirst<T>(this IEnumerable<T> roots, Func<T, IEnumerable<T>> childrenSelector)

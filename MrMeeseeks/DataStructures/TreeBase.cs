@@ -17,7 +17,9 @@ namespace MrMeeseeks.DataStructures
 
         public Tree<T> GetOrCreate<TOther>(IEnumerable<TOther> path, Func<T, TOther, bool> predicate, Func<TOther, T> factory)
         {
+            // ReSharper disable PossibleMultipleEnumeration
             if (path is null || path.Any().Not()) throw new ArgumentException("Cannot process empty path.");
+            
 
             var first = path.First();
             var nextChild = Children.FirstOrDefault(t => predicate(t.Value, first));
@@ -26,11 +28,12 @@ namespace MrMeeseeks.DataStructures
                 nextChild = new Tree<T>(factory(first));
                 Children.Add(nextChild);
             }
-
+            
             var nextPath = path.Skip(1);
             return nextPath.Any()
                 ? nextChild.GetOrCreate(nextPath, predicate, factory)
                 : nextChild;
+            // ReSharper restore PossibleMultipleEnumeration
         }
     }
 }

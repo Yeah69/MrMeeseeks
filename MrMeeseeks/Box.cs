@@ -97,15 +97,16 @@ namespace MrMeeseeks
             private async Task FulfillmentProcess()
             {
                 using var cancellation = new CancellationTokenSource();
+                // ReSharper disable once AccessToDisposedClosure
                 var taskProgression = Task.Run(() => TaskProgression(cancellation.Token), cancellation.Token);
 
-                await Task.WhenAny(taskProgression, FulfilledSuccessfully());
+                await Task.WhenAny(taskProgression, FulfilledSuccessfully(cancellation.Token));
                 
                 cancellation.Cancel();
 
                 SpeakAsMeeseeks(OnFinishedTasks);
 
-                async Task FulfilledSuccessfully()
+                async Task FulfilledSuccessfully(CancellationToken cancellationToken)
                 {
                     try
                     {
@@ -113,7 +114,7 @@ namespace MrMeeseeks
                     }
                     catch (Exception)
                     {
-                        await Task.Delay(Timeout.Infinite, cancellation.Token);
+                        await Task.Delay(Timeout.Infinite, cancellationToken);
                     }
                 }
             }

@@ -23,12 +23,14 @@ namespace MrMeeseeks.LambdaPattern
         {
             if(!_skipDefaultNullComparison)
             {
+                // ReSharper disable ConditionIsAlwaysTrueOrFalse
                 if (x is null && y is null)
                     return 0;
                 if (x is null)
                     return _descending ? 1 : -1;
                 if (y is null)
                     return _descending ? -1 : 1;
+                // ReSharper restore ConditionIsAlwaysTrueOrFalse
             }
             return _descending 
                 ? -1 * _comparingLogic(x, y)

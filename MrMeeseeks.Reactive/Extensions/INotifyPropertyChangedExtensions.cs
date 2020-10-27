@@ -6,6 +6,7 @@ using MrMeeseeks.Extensions;
 
 namespace MrMeeseeks.Reactive.Extensions
 {
+    // ReSharper disable once InconsistentNaming
     public static class INotifyPropertyChangedExtensions
     {
         public static IObservable<string> ObservePropertyChanged(
@@ -27,7 +28,7 @@ namespace MrMeeseeks.Reactive.Extensions
             this INotifyPropertyChanged notifyPropertyChanged,
             params string[] propertyNames)
         {
-            var propertyNamesHashSet = propertyNames.WhereNotNull().ToHashSet();
+            var propertyNamesHashSet = propertyNames.ToHashSet();
             return Observable
                 .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
                     handler => handler.Invoke,

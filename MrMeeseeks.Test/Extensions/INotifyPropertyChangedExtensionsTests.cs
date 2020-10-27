@@ -7,6 +7,7 @@ using Xunit;
 
 namespace MrMeeseeks.Test.Extensions
 {
+    // ReSharper disable once InconsistentNaming
     public class INotifyPropertyChangedExtensionsTests
     {
         [Fact]

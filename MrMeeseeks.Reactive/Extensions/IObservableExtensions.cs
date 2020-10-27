@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 
 namespace MrMeeseeks.Reactive.Extensions
 {
+    // ReSharper disable once InconsistentNaming
     public static class IObservableExtensions
     {
         public static IObservable<Unit> SelectUnit<T>(this IObservable<T> observable) =>
