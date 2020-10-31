@@ -22,9 +22,16 @@ namespace MrMeeseeks.Extensions
         }
 
         // ReSharper disable once RedundantAssignment
-        public static T SetTo<T, TSet>(this T element, ref TSet reference) where T : TSet
+        public static T SetTo<T, TSet>(this T element, out TSet reference) where T : TSet
         {
             reference = element;
+            return element;
+        }
+
+        // ReSharper disable once RedundantAssignment
+        public static T SetTo<T, TSet>(this T element, Action<TSet> setAction) where T : TSet
+        {
+            setAction(element);
             return element;
         }
 
