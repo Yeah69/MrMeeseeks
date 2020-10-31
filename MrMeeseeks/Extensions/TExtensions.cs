@@ -21,9 +21,10 @@ namespace MrMeeseeks.Extensions
             return element;
         }
 
-        public static T AddForDisposalTo<T>(this T element, ICollection<IDisposable> collection) where T : IDisposable
+        // ReSharper disable once RedundantAssignment
+        public static T SetTo<T, TSet>(this T element, ref TSet reference) where T : TSet
         {
-            collection.Add(element);
+            reference = element;
             return element;
         }
 

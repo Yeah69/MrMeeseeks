@@ -9,5 +9,8 @@ namespace MrMeeseeks.Reactive.Extensions
     {
         public static IObservable<Unit> SelectUnit<T>(this IObservable<T> observable) =>
             observable.Select(_ => Unit.Default);
+        
+        public static IDisposable SubscribeUnit<T>(this IObservable<T> observable, Action onNextUnit) =>
+            observable.Subscribe(_ => onNextUnit());
     }
 }
