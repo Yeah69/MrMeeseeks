@@ -15,3 +15,9 @@ Nuget is the easiest way to install it (see [nuget page](https://www.nuget.org/p
 ```
 > Install-Package MrMeeseeks
 ```
+
+# Warning
+
+This project is highly unstable. It may never get to be stable. It will have breaking changes often. 
+Buuuutt it has the most accurate and up-to-date documentation of any projects: the code is the documentation. So RTFC!
+Have fun!
