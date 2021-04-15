@@ -10,6 +10,7 @@ If you find something interesting for you, feel free to use at your own risk. I 
 Existence is pain for Tasks! You are obliged to keep them simple and fast to accomplished! Or otherwise they'll get back at you!
 
 DON'T USE THE BOX ON PRODUCTION CODE! You are warned!</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,6 +6,7 @@
         <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
+        <PackageVersion>$(MinVerVersion)</PackageVersion>
         <WarningsAsErrors>nullable</WarningsAsErrors>
         <Authors>Yeah69</Authors>
         <PackageIcon>Yeah69Logo_256.png</PackageIcon>
