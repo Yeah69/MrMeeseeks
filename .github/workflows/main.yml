@@ -36,17 +36,24 @@ jobs:
         VERSION_FILE_PATH: Directory.Build.props
         TAG_COMMIT: false
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-    - name: Publish to NuGet
+    - name: Publish to NuGet Reactive
       uses: brandedoutcast/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: MrMeeseeks.Reactive/MrMeeseeks.Reactive.csproj
         VERSION_FILE_PATH: Directory.Build.props
         TAG_COMMIT: false
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-    - name: Publish to NuGet
+    - name: Publish to NuGet Windows
       uses: brandedoutcast/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: MrMeeseeks.Windows/MrMeeseeks.Windows.csproj
+        VERSION_FILE_PATH: Directory.Build.props
+        TAG_COMMIT: false
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+    - name: Publish to NuGet Windows HamburgerMenu
+      uses: brandedoutcast/publish-nuget@v2
+      with:
+        PROJECT_FILE_PATH: MrMeeseeks.Windows.HamburgerMenu/MrMeeseeks.Windows.HamburgerMenu.csproj
         VERSION_FILE_PATH: Directory.Build.props
         TAG_COMMIT: false
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
