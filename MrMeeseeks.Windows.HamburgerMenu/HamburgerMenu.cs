@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -7,80 +8,209 @@ using System.Windows.Input;
 
 namespace MrMeeseeks.Windows.HamburgerMenu
 {
-    /// <summary>
-    /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-    ///
-    /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:HamburgerMenuBlah"
-    ///
-    ///
-    /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:HamburgerMenuBlah;assembly=HamburgerMenuBlah"
-    ///
-    /// You will also need to add a project reference from the project where the XAML file lives
-    /// to this project and Rebuild to avoid compilation errors:
-    ///
-    ///     Right click on the target project in the Solution Explorer and
-    ///     "Add Reference"->"Projects"->[Select this project]
-    ///
-    ///
-    /// Step 2)
-    /// Go ahead and use your control in the XAML file.
-    ///
-    ///     <MyNamespace:HamburgerMenuBlah/>
-    ///
-    /// </summary>
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(HamburgerMenuItem))]
     [TemplatePart(Name = "PART_SelectedContentHost", Type = typeof(ContentPresenter))]
     public class HamburgerMenu : MultiSelector
     {
-        public static readonly DependencyProperty SelectedContentProperty = DependencyProperty.Register(
-            nameof(SelectedContent),
-            typeof(object),
-            typeof(HamburgerMenu),
-            new PropertyMetadata(default(object)));
+        private const string SelectedContentHostTemplateName = "PART_SelectedContentHost";
+        private const string HamburgerButtonTemplateName = "PART_HamburgerButton";
 
-        public static readonly DependencyProperty SelectedContentTemplateProperty = DependencyProperty.Register(
-            nameof(SelectedContentTemplate),
-            typeof(DataTemplate),
-            typeof(HamburgerMenu),
-            new PropertyMetadata(default(DataTemplate)));
+        private static readonly DependencyPropertyKey SelectedContentPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContent), typeof(object), typeof(HamburgerMenu),
+                new PropertyMetadata(null));
 
-        public static readonly DependencyProperty SelectedContentTemplateSelectorProperty = DependencyProperty.Register(
-            nameof(SelectedContentTemplateSelector),
-            typeof(DataTemplateSelector),
-            typeof(HamburgerMenu),
-            new PropertyMetadata(default(DataTemplateSelector)));
+        public static readonly DependencyProperty SelectedContentProperty =
+            SelectedContentPropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty SelectedContentStringFormatProperty = DependencyProperty.Register(
-            nameof(SelectedContentStringFormat),
-            typeof(string),
-            typeof(HamburgerMenu),
-            new PropertyMetadata(default(string)));
+        public static readonly DependencyPropertyKey SelectedContentTemplatePropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContentTemplate), typeof(DataTemplate),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ContentTemplateProperty = DependencyProperty.Register(
-            nameof(ContentTemplate),
-            typeof(DataTemplate),
-            typeof(HamburgerMenu),
-            new PropertyMetadata(default(DataTemplate)));
+        public static readonly DependencyProperty SelectedContentTemplateProperty =
+            SelectedContentTemplatePropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty ContentTemplateSelectorProperty = DependencyProperty.Register(
-            nameof(ContentTemplateSelector),
-            typeof(DataTemplateSelector),
-            typeof(HamburgerMenu),
-            new PropertyMetadata(default(DataTemplateSelector)));
+        public static readonly DependencyPropertyKey SelectedContentTemplateSelectorPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContentTemplateSelector), typeof(DataTemplateSelector),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ContentStringFormatProperty = DependencyProperty.Register(
-            nameof(ContentStringFormat),
-            typeof(string),
-            typeof(HamburgerMenu),
-            new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty SelectedContentTemplateSelectorProperty =
+            SelectedContentTemplateSelectorPropertyKey.DependencyProperty;
+
+        public static readonly DependencyPropertyKey SelectedContentStringFormatPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContentStringFormat), typeof(string),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SelectedContentStringFormatProperty =
+            SelectedContentStringFormatPropertyKey.DependencyProperty;
+
+        public static readonly DependencyProperty ContentTemplateProperty =
+            DependencyProperty.Register(nameof(ContentTemplate), typeof(DataTemplate), typeof(HamburgerMenu),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ContentTemplateSelectorProperty =
+            DependencyProperty.Register(nameof(ContentTemplateSelector), typeof(DataTemplateSelector),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ContentStringFormatProperty =
+            DependencyProperty.Register(nameof(ContentStringFormat), typeof(string), typeof(HamburgerMenu),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty IconLengthProperty = DependencyProperty.Register(nameof(IconLength),
+            typeof(double), typeof(HamburgerMenu), new PropertyMetadata(0.0, (o, args) =>
+            {
+                if (!(o is HamburgerMenu hamburgerMenu))
+                    return;
+                foreach (DependencyObject dependencyObject in hamburgerMenu.Items.OfType<HamburgerMenuItem>())
+                    dependencyObject.CoerceValue(IconLengthProperty);
+            }));
+
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon),
+            typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty IconTemplateProperty =
+            DependencyProperty.Register(nameof(IconTemplate), typeof(DataTemplate), typeof(HamburgerMenu),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty IconTemplateSelectorProperty =
+            DependencyProperty.Register(nameof(IconTemplateSelector), typeof(DataTemplateSelector),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty IconStringFormatProperty =
+            DependencyProperty.Register(nameof(IconStringFormat), typeof(string), typeof(HamburgerMenu),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen),
+            typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty IsOverlayingProperty =
+            DependencyProperty.Register(nameof(IsOverlaying), typeof(bool), typeof(HamburgerMenu),
+                new PropertyMetadata(false));
+
+        public static readonly DependencyProperty ClosePaneOnItemSelectionProperty =
+            DependencyProperty.Register(nameof(ClosePaneOnItemSelection), typeof(bool), typeof(HamburgerMenu),
+                new PropertyMetadata(false));
+
+        private static readonly DependencyPropertyKey SelectedContentHeaderPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContentHeader), typeof(object), typeof(HamburgerMenu),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SelectedContentHeaderProperty =
+            SelectedContentHeaderPropertyKey.DependencyProperty;
+
+        public static readonly DependencyPropertyKey SelectedContentHeaderTemplatePropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContentHeaderTemplate), typeof(DataTemplate),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SelectedContentHeaderTemplateProperty =
+            SelectedContentHeaderTemplatePropertyKey.DependencyProperty;
+
+        public static readonly DependencyPropertyKey SelectedContentHeaderTemplateSelectorPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContentHeaderTemplateSelector),
+                typeof(DataTemplateSelector), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SelectedContentHeaderTemplateSelectorProperty =
+            SelectedContentHeaderTemplateSelectorPropertyKey.DependencyProperty;
+
+        public static readonly DependencyPropertyKey SelectedContentHeaderStringFormatPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(SelectedContentHeaderStringFormat), typeof(string),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SelectedContentHeaderStringFormatProperty =
+            SelectedContentHeaderStringFormatPropertyKey.DependencyProperty;
+
+        private static readonly DependencyPropertyKey IsContentHeaderSetPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(IsContentHeaderSet), typeof(bool), typeof(HamburgerMenu),
+                new PropertyMetadata(false));
+
+        public static readonly DependencyProperty IsContentHeaderSetProperty =
+            IsContentHeaderSetPropertyKey.DependencyProperty;
+
+        static HamburgerMenu()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HamburgerMenu),
+                new FrameworkPropertyMetadata(typeof(HamburgerMenu)));
+            IsTabStopProperty.OverrideMetadata(typeof(HamburgerMenu), new FrameworkPropertyMetadata(false));
+            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(HamburgerMenu),
+                new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
+        }
+
+        public string IconStringFormat
+        {
+            get => (string) GetValue(IconStringFormatProperty);
+            set => SetValue(IconStringFormatProperty, value);
+        }
+
+        public DataTemplateSelector IconTemplateSelector
+        {
+            get => (DataTemplateSelector) GetValue(IconTemplateSelectorProperty);
+            set => SetValue(IconTemplateSelectorProperty, value);
+        }
+
+        public DataTemplate IconTemplate
+        {
+            get => (DataTemplate) GetValue(IconTemplateProperty);
+            set => SetValue(IconTemplateProperty, value);
+        }
+
+        public object Icon
+        {
+            get => GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
+        public bool IsContentHeaderSet
+        {
+            get => (bool) GetValue(IsContentHeaderSetProperty);
+            private set => SetValue(IsContentHeaderSetPropertyKey, value);
+        }
+
+        public object? SelectedContentHeader
+        {
+            get => GetValue(SelectedContentHeaderProperty);
+            internal set => SetValue(SelectedContentHeaderPropertyKey, value);
+        }
+
+        public DataTemplate? SelectedContentHeaderTemplate
+        {
+            get => (DataTemplate) GetValue(SelectedContentHeaderTemplateProperty);
+            internal set => SetValue(SelectedContentHeaderTemplatePropertyKey, value);
+        }
+
+        public DataTemplateSelector? SelectedContentHeaderTemplateSelector
+        {
+            get => (DataTemplateSelector) GetValue(SelectedContentHeaderTemplateSelectorProperty);
+            internal set => SetValue(SelectedContentHeaderTemplateSelectorPropertyKey, value);
+        }
+
+        public string? SelectedContentHeaderStringFormat
+        {
+            get => (string) GetValue(SelectedContentHeaderStringFormatProperty);
+            internal set => SetValue(SelectedContentHeaderStringFormatPropertyKey, value);
+        }
+
+        public bool ClosePaneOnItemSelection
+        {
+            get => (bool) GetValue(ClosePaneOnItemSelectionProperty);
+            set => SetValue(ClosePaneOnItemSelectionProperty, value);
+        }
+
+        public bool IsOverlaying
+        {
+            get => (bool) GetValue(IsOverlayingProperty);
+            set => SetValue(IsOverlayingProperty, value);
+        }
+
+        public bool IsPaneOpen
+        {
+            get => (bool) GetValue(IsPaneOpenProperty);
+            set => SetValue(IsPaneOpenProperty, value);
+        }
+
+        public double IconLength
+        {
+            get => (double) GetValue(IconLengthProperty);
+            set => SetValue(IconLengthProperty, value);
+        }
 
         public string ContentStringFormat
         {
@@ -103,103 +233,81 @@ namespace MrMeeseeks.Windows.HamburgerMenu
         public string? SelectedContentStringFormat
         {
             get => (string) GetValue(SelectedContentStringFormatProperty);
-            set => SetValue(SelectedContentStringFormatProperty, value);
+            internal set => SetValue(SelectedContentStringFormatPropertyKey, value);
         }
 
         public DataTemplateSelector? SelectedContentTemplateSelector
         {
             get => (DataTemplateSelector) GetValue(SelectedContentTemplateSelectorProperty);
-            set => SetValue(SelectedContentTemplateSelectorProperty, value);
+            internal set => SetValue(SelectedContentTemplateSelectorPropertyKey, value);
         }
 
         public DataTemplate? SelectedContentTemplate
         {
             get => (DataTemplate) GetValue(SelectedContentTemplateProperty);
-            set => SetValue(SelectedContentTemplateProperty, value);
+            internal set => SetValue(SelectedContentTemplatePropertyKey, value);
         }
 
         public object? SelectedContent
         {
             get => GetValue(SelectedContentProperty);
-            set => SetValue(SelectedContentProperty, value);
-        }
-        private const string SelectedContentHostTemplateName = "PART_SelectedContentHost";
-
-        static HamburgerMenu()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(HamburgerMenu), new FrameworkPropertyMetadata(typeof(HamburgerMenu)));
-            IsTabStopProperty.OverrideMetadata(typeof(HamburgerMenu), new FrameworkPropertyMetadata(false));
-            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(HamburgerMenu), new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
+            internal set => SetValue(SelectedContentPropertyKey, value);
         }
 
-        //internal override void ChangeVisualState(bool useTransitions)
-        //{
-        //    if (!IsEnabled)
-        //        VisualStates.GoToState(this, (useTransitions ? 1 : 0) != 0, "Disabled", "Normal");
-        //    else
-        //        VisualStateManager.GoToState(this, "Normal", useTransitions);
-        //    base.ChangeVisualState(useTransitions);
-        //}
-
-        //protected override AutomationPeer OnCreateAutomationPeer()
-        //{
-        //    return new TabControlAutomationPeer(this);
-        //}
+        internal ContentPresenter? SelectedContentPresenter =>
+            GetTemplateChild("PART_SelectedContentHost") as ContentPresenter;
 
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            //this.CanSelectMultiple = false;
-            this.CanSelectMultipleItems = false;
+            CanSelectMultipleItems = false;
             ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
         }
-        
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            if (Template.FindName("PART_HamburgerButton", this) is Button name)
+                name.Click += (RoutedEventHandler) ((sender, args) => IsPaneOpen = !IsPaneOpen);
             UpdateSelectedContent();
         }
-        
+
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             base.OnSelectionChanged(e);
             if (IsKeyboardFocusWithin)
-            {
                 GetSelectedHamburgerMenuItem()?.SetFocus();
-            }
+            if (ClosePaneOnItemSelection)
+                IsPaneOpen = false;
             UpdateSelectedContent();
-            //if (!AutomationPeer.ListenerExists(AutomationEvents.SelectionPatternOnInvalidated) && !AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected) && (!AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementAddedToSelection) && !AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)))
-            //    return;
-            //TabControlAutomationPeer peerForElement = UIElementAutomationPeer.CreatePeerForElement(this) as TabControlAutomationPeer;
-            //if (peerForElement == null)
-            //    return;
-            //peerForElement.RaiseSelectionEvents(e);
         }
-        
+
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
             if (e.Action != NotifyCollectionChangedAction.Remove || SelectedIndex != -1)
                 return;
-            int startIndex = e.OldStartingIndex + 1;
+            var startIndex = e.OldStartingIndex + 1;
             if (startIndex > Items.Count)
                 startIndex = 0;
-            HamburgerMenuItem? nextHamburgerMenuItem = FindNextHamburgerMenuItem(startIndex, -1);
-            nextHamburgerMenuItem?.SetValue(IsSelectedProperty, true);
+            FindNextHamburgerMenuItem(startIndex, -1)?.SetValue(IsSelectedProperty, true);
         }
-        
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            int direction = 0;
-            int startIndex = -1;
+            var direction = 0;
+            var startIndex = -1;
             switch (e.Key)
             {
                 case Key.Tab:
                     if ((e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
                     {
-                        startIndex = ItemContainerGenerator.IndexFromContainer(ItemContainerGenerator.ContainerFromItem(SelectedItem));
+                        startIndex =
+                            ItemContainerGenerator.IndexFromContainer(
+                                ItemContainerGenerator.ContainerFromItem(SelectedItem));
                         direction = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) != ModifierKeys.Shift ? 1 : -1;
                     }
+
                     break;
                 case Key.End:
                     direction = -1;
@@ -210,51 +318,53 @@ namespace MrMeeseeks.Windows.HamburgerMenu
                     startIndex = -1;
                     break;
             }
-            HamburgerMenuItem? nextHamburgerMenuItem = FindNextHamburgerMenuItem(startIndex, direction);
-            if (nextHamburgerMenuItem != null && nextHamburgerMenuItem != SelectedItem)
-                e.Handled = nextHamburgerMenuItem.SetFocus();
+
+            var hamburgerMenuItem = FindNextHamburgerMenuItem(startIndex, direction);
+            if (hamburgerMenuItem != null && !Equals(hamburgerMenuItem, SelectedItem))
+                e.Handled = hamburgerMenuItem.SetFocus();
             if (e.Handled)
                 return;
             base.OnKeyDown(e);
         }
 
-        private HamburgerMenuItem? FindNextHamburgerMenuItem(int startIndex, int direction)
+        private HamburgerMenuItem? FindNextHamburgerMenuItem(
+            int startIndex,
+            int direction)
         {
             HamburgerMenuItem? hamburgerMenuItem1 = null;
-            if (direction != 0)
+            if ((uint) direction > 0U)
             {
-                int index1 = startIndex;
-                for (int index2 = 0; index2 < Items.Count; ++index2)
+                var index1 = startIndex;
+                for (var index2 = 0; index2 < Items.Count; ++index2)
                 {
                     index1 += direction;
                     if (index1 >= Items.Count)
                         index1 = 0;
                     else if (index1 < 0)
                         index1 = Items.Count - 1;
-                    HamburgerMenuItem? hamburgerMenuItem2 = ItemContainerGenerator.ContainerFromIndex(index1) as HamburgerMenuItem;
-                    if (hamburgerMenuItem2 != null && hamburgerMenuItem2.IsEnabled && hamburgerMenuItem2.Visibility == Visibility.Visible)
+                    if (ItemContainerGenerator.ContainerFromIndex(index1) is HamburgerMenuItem hamburgerMenuItem2 &&
+                        hamburgerMenuItem2.IsEnabled && hamburgerMenuItem2.Visibility == Visibility.Visible)
                     {
                         hamburgerMenuItem1 = hamburgerMenuItem2;
                         break;
                     }
                 }
             }
+
             return hamburgerMenuItem1;
         }
-        
+
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is HamburgerMenuItem;
         }
-        
+
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new HamburgerMenuItem();
         }
 
-        internal ContentPresenter? SelectedContentPresenter => GetTemplateChild("PART_SelectedContentHost") as ContentPresenter;
-
-        private void OnGeneratorStatusChanged(object? sender, EventArgs? e)
+        private void OnGeneratorStatusChanged(object sender, EventArgs e)
         {
             if (ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated)
                 return;
@@ -280,44 +390,52 @@ namespace MrMeeseeks.Windows.HamburgerMenu
 
         private void UpdateSelectedContent()
         {
-            if (SelectedIndex < 0)
+            SelectedContent = null;
+            SelectedContentTemplate = null;
+            SelectedContentTemplateSelector = null;
+            SelectedContentStringFormat = null;
+            SelectedContentHeader = null;
+            SelectedContentHeaderTemplate = null;
+            SelectedContentHeaderTemplateSelector = null;
+            SelectedContentHeaderStringFormat = null;
+            IsContentHeaderSet = false;
+            var hamburgerMenuItem = GetSelectedHamburgerMenuItem();
+            if (hamburgerMenuItem == null)
+                return;
+            SelectedContent = hamburgerMenuItem.Content;
+            SelectedContentHeader = hamburgerMenuItem.ContentHeader;
+            var contentPresenter = SelectedContentPresenter;
+            if (contentPresenter != null)
             {
-                SelectedContent = null;
-                SelectedContentTemplate = null;
-                SelectedContentTemplateSelector = null;
-                SelectedContentStringFormat = null;
+                contentPresenter.HorizontalAlignment = hamburgerMenuItem.HorizontalContentAlignment;
+                contentPresenter.VerticalAlignment = hamburgerMenuItem.VerticalContentAlignment;
+            }
+
+            if (hamburgerMenuItem.ContentTemplate != null || hamburgerMenuItem.ContentTemplateSelector != null ||
+                hamburgerMenuItem.ContentStringFormat != null)
+            {
+                SelectedContentTemplate = hamburgerMenuItem.ContentTemplate;
+                SelectedContentTemplateSelector = hamburgerMenuItem.ContentTemplateSelector;
+                SelectedContentStringFormat = hamburgerMenuItem.ContentStringFormat;
             }
             else
             {
-                HamburgerMenuItem? selectedHamburgerMenuItem = GetSelectedHamburgerMenuItem();
-                if (selectedHamburgerMenuItem == null)
-                    return;
-                //FrameworkElement parent = VisualTreeHelper.GetParent(selectedHamburgerMenuItem) as FrameworkElement;
-                //if (parent != null)
-                //{
-                //    KeyboardNavigation.SetTabOnceActiveElement(parent, selectedHamburgerMenuItem);
-                //    KeyboardNavigation.SetTabOnceActiveElement(this, parent);
-                //}
-                SelectedContent = selectedHamburgerMenuItem.Content;
-                ContentPresenter? contentPresenter = SelectedContentPresenter;
-                if (contentPresenter != null)
-                {
-                    contentPresenter.HorizontalAlignment = selectedHamburgerMenuItem.HorizontalContentAlignment;
-                    contentPresenter.VerticalAlignment = selectedHamburgerMenuItem.VerticalContentAlignment;
-                }
-                if (selectedHamburgerMenuItem.ContentTemplate != null || selectedHamburgerMenuItem.ContentTemplateSelector != null || selectedHamburgerMenuItem.ContentStringFormat != null)
-                {
-                    SelectedContentTemplate = selectedHamburgerMenuItem.ContentTemplate;
-                    SelectedContentTemplateSelector = selectedHamburgerMenuItem.ContentTemplateSelector;
-                    SelectedContentStringFormat = selectedHamburgerMenuItem.ContentStringFormat;
-                }
-                else
-                {
-                    SelectedContentTemplate = ContentTemplate;
-                    SelectedContentTemplateSelector = ContentTemplateSelector;
-                    SelectedContentStringFormat = ContentStringFormat;
-                }
+                SelectedContentTemplate = ContentTemplate;
+                SelectedContentTemplateSelector = ContentTemplateSelector;
+                SelectedContentStringFormat = ContentStringFormat;
             }
+
+            if (hamburgerMenuItem.ContentHeaderTemplate != null ||
+                hamburgerMenuItem.ContentHeaderTemplateSelector != null ||
+                hamburgerMenuItem.ContentHeaderStringFormat != null)
+            {
+                SelectedContentHeaderTemplate = hamburgerMenuItem.ContentHeaderTemplate;
+                SelectedContentHeaderTemplateSelector = hamburgerMenuItem.ContentHeaderTemplateSelector;
+                SelectedContentHeaderStringFormat = hamburgerMenuItem.ContentHeaderStringFormat;
+            }
+
+            IsContentHeaderSet = SelectedContentHeader != null || SelectedContentHeaderStringFormat != null ||
+                                 SelectedContentHeaderTemplate != null || SelectedContentHeaderTemplateSelector != null;
         }
     }
 }
