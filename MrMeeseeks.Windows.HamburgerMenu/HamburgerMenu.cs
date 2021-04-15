@@ -254,7 +254,7 @@ namespace MrMeeseeks.Windows.HamburgerMenu
 
         internal ContentPresenter? SelectedContentPresenter => GetTemplateChild("PART_SelectedContentHost") as ContentPresenter;
 
-        private void OnGeneratorStatusChanged(object sender, EventArgs e)
+        private void OnGeneratorStatusChanged(object? sender, EventArgs? e)
         {
             if (ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated)
                 return;
