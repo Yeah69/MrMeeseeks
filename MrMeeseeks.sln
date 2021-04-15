@@ -16,6 +16,8 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks.Windows", "MrMeeseeks.Windows\MrMeeseeks.Windows.csproj", "{9834BE68-0900-4467-8CFC-DB7CD002CF51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks.Windows.HamburgerMenu", "MrMeeseeks.Windows.HamburgerMenu\MrMeeseeks.Windows.HamburgerMenu.csproj", "{BD188BF0-2027-422F-A382-D69B584D8FAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{9834BE68-0900-4467-8CFC-DB7CD002CF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9834BE68-0900-4467-8CFC-DB7CD002CF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9834BE68-0900-4467-8CFC-DB7CD002CF51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD188BF0-2027-422F-A382-D69B584D8FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD188BF0-2027-422F-A382-D69B584D8FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD188BF0-2027-422F-A382-D69B584D8FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD188BF0-2027-422F-A382-D69B584D8FAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

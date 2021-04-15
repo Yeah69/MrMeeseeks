@@ -39,6 +39,32 @@ namespace MrMeeseeks.Extensions
         {
             yield return element;
         }
+        
+        public static IDisposable AsDisposable(this object element) => element as IDisposable ?? EmptyDisposable.Instance;
+        
+        /// <summary>
+        /// !!! Copied from System.Reactive (https://github.com/dotnet/reactive), because I didn't want to depend on it in this project !!!
+        /// Represents a disposable that does nothing on disposal.
+        /// </summary>
+        private sealed class EmptyDisposable : IDisposable
+        {
+            /// <summary>
+            /// Singleton default disposable.
+            /// </summary>
+            public static readonly EmptyDisposable Instance = new EmptyDisposable();
+
+            private EmptyDisposable()
+            {
+            }
+
+            /// <summary>
+            /// Does nothing.
+            /// </summary>
+            public void Dispose()
+            {
+                // no op
+            }
+        }
 
         public static IEnumerable<T> IterateTreeBreadthFirst<T>(this T root, Func<T, IEnumerable<T>> childrenSelector)
         {
