@@ -4,7 +4,7 @@
         <Version>$(MinVerVersion)</Version>
         <TargetFramework>netstandard2.0</TargetFramework>
         <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
-        <LangVersion>8</LangVersion>
+        <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
         <WarningsAsErrors>nullable</WarningsAsErrors>
         <Authors>Yeah69</Authors>
