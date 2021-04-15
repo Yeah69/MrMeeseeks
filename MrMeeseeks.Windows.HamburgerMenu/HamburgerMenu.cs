@@ -364,7 +364,7 @@ namespace MrMeeseeks.Windows.HamburgerMenu
             return new HamburgerMenuItem();
         }
 
-        private void OnGeneratorStatusChanged(object sender, EventArgs e)
+        private void OnGeneratorStatusChanged(object? sender, EventArgs? e)
         {
             if (ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated)
                 return;
