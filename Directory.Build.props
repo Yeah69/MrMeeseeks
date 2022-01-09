@@ -1,22 +1,30 @@
 <Project>
+    <!-- General -->
     <PropertyGroup>
         <MinVerTagPrefix>v</MinVerTagPrefix>
         <Version>$(MinVerVersion)</Version>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageVersion>$(MinVerVersion)</PackageVersion>
         <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
-        <PackageVersion>$(MinVerVersion)</PackageVersion>
         <WarningsAsErrors>nullable</WarningsAsErrors>
         <Authors>Yeah69</Authors>
         <PackageIcon>Yeah69Logo_256.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\Icon\Yeah69Logo_256.png">
+            <Pack>true</Pack>
+            <PackagePath/>
+        </None>
+    </ItemGroup>
+    
+    <!-- General Package -->
+    <PropertyGroup>
+        <PackageVersion>$(MinVerVersion)</PackageVersion>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>Utility Helper MrMeeseeks</PackageTags>
-        <PackageProjectUrl>https://github.com/Yeah69/MrMeeseeks</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/Yeah69/MrMeeseeks</RepositoryUrl>
-        <PackageLicenseExpression />
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageReleaseNotes>-/-</PackageReleaseNotes>
+        <PackageLicenseExpression />
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,14 +34,16 @@
         </None>
     </ItemGroup>
 
-    <ItemGroup>
-        <None Include="..\Icon\Yeah69Logo.ico">
-            <Pack>true</Pack>
-            <PackagePath/>
-        </None>
-        <None Include="..\Icon\Yeah69Logo_256.png">
-            <Pack>true</Pack>
-            <PackagePath/>
-        </None>
-    </ItemGroup>
+    <!-- Specific -->
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <!-- Specific Package -->
+    <PropertyGroup>
+        <PackageTags>Utility Helper MrMeeseeks</PackageTags>
+        <PackageProjectUrl>https://github.com/Yeah69/MrMeeseeks</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Yeah69/MrMeeseeks</RepositoryUrl>
+        <PackageReleaseNotes>-/-</PackageReleaseNotes>
+    </PropertyGroup>
 </Project>

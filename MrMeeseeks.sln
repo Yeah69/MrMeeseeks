@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{4DC733E7-47E7-439E-A415-620EB886DBB9}"
 ProjectSection(SolutionItems) = preProject
 	Directory.Build.props = Directory.Build.props
+	Icon\Yeah69Logo_256.png = Icon\Yeah69Logo_256.png
+	LICENSE = LICENSE
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrMeeseeks.Windows", "MrMeeseeks.Windows\MrMeeseeks.Windows.csproj", "{9834BE68-0900-4467-8CFC-DB7CD002CF51}"

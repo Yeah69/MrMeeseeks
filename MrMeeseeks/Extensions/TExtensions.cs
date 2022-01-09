@@ -15,7 +15,7 @@ namespace MrMeeseeks.Extensions
 
         public static bool IsNotNull<T>(this T? element) where T : struct => element is {};
 
-        public static T AddTo<T>(this T element, ICollection<T> collection)
+        public static T AddTo<T, TItem>(this T element, ICollection<TItem> collection) where T : TItem
         {
             collection.Add(element);
             return element;
